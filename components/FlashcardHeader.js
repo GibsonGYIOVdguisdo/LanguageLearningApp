@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
-function Header () {
+function Header() {
   return (
     <View style={styles.header}>
       <Text style={styles.headerText}>German</Text>
@@ -11,7 +11,7 @@ function Header () {
         />
       </TouchableOpacity>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -38,6 +38,6 @@ const styles = StyleSheet.create({
     width: 23,
     height: 23
   }
-})
+});
 
-export default Header
+export default Header;

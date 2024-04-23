@@ -1,6 +1,5 @@
-import Header from '../components/Header'
-import Footer from '../components/Footer'
-
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import {
   StyleSheet,
   View,
@@ -9,9 +8,9 @@ import {
   Text,
   ScrollView,
   TouchableOpacity
-} from 'react-native'
+} from 'react-native';
 
-function HopBackInCard (amountToReview, amountToLearn, amountLearnt) {
+function HopBackInCard(amountToReview, amountToLearn, amountLearnt) {
   return (
     <View style={styles.cardContainer}>
       <View style={styles.card}>
@@ -39,10 +38,10 @@ function HopBackInCard (amountToReview, amountToLearn, amountLearnt) {
         </View>
       </View>
     </View>
-  )
+  );
 }
 
-function LearningStreakCard (currentLearningStreak, bestLearningStreak) {
+function LearningStreakCard(currentLearningStreak, bestLearningStreak) {
   return (
     <View style={styles.cardContainer}>
       <View style={styles.card}>
@@ -60,10 +59,10 @@ function LearningStreakCard (currentLearningStreak, bestLearningStreak) {
         </View>
       </View>
     </View>
-  )
+  );
 }
 
-function ProgressCard (
+function ProgressCard(
   AllTimeWordCount,
   TodaysWordCount,
   AllTimeMinutes,
@@ -90,10 +89,10 @@ function ProgressCard (
         </View>
       </View>
     </View>
-  )
+  );
 }
 
-function Home ({ amountToReview, amountToLearn, amountLearnt }) {
+function Home({ amountToReview, amountToLearn, amountLearnt }) {
   return (
     <View style={styles.body}>
       <Header />
@@ -104,7 +103,7 @@ function Home ({ amountToReview, amountToLearn, amountLearnt }) {
       </ScrollView>
       <Footer />
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -184,6 +183,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1
   }
-})
+});
 
-export default Home
+export default Home;

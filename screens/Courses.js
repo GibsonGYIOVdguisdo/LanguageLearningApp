@@ -1,5 +1,5 @@
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 import {
   StyleSheet,
@@ -9,9 +9,9 @@ import {
   Text,
   TouchableOpacity,
   ScrollView
-} from 'react-native'
+} from 'react-native';
 
-function CourseCard (courseName, amountLearnt, amountToLearn, amountToReview) {
+function CourseCard(courseName, amountLearnt, amountToLearn, amountToReview) {
   return (
     <View style={styles.cardContainer}>
       <View style={styles.card}>
@@ -39,10 +39,10 @@ function CourseCard (courseName, amountLearnt, amountToLearn, amountToReview) {
         </View>
       </View>
     </View>
-  )
+  );
 }
 
-function Courses () {
+function Courses() {
   return (
     <View style={styles.body}>
       <Header />
@@ -56,7 +56,7 @@ function Courses () {
       </ScrollView>
       <Footer />
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -123,6 +123,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Inter-Medium'
   }
-})
+});
 
-export default Courses
+export default Courses;

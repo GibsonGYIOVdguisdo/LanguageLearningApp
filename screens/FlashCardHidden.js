@@ -1,4 +1,4 @@
-import FlashcardHeader from '../components/FlashcardHeader'
+import FlashcardHeader from '../components/FlashcardHeader';
 
 import {
   StyleSheet,
@@ -7,9 +7,9 @@ import {
   Text,
   StatusBar,
   TouchableOpacity
-} from 'react-native'
+} from 'react-native';
 
-function FlashCardHidden ({ cardText, cardsCompleted, cardsToComplete }) {
+function FlashCardHidden({ cardText, cardsCompleted, cardsToComplete }) {
   return (
     <View style={styles.body}>
       <FlashcardHeader />
@@ -21,7 +21,7 @@ function FlashCardHidden ({ cardText, cardsCompleted, cardsToComplete }) {
         <Text style={styles.buttonText}>Show translation</Text>
       </TouchableOpacity>
     </View>
-  )
+  );
 }
 const styles = StyleSheet.create({
   body: {
@@ -55,5 +55,5 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center'
   }
-})
-export default FlashCardHidden
+});
+export default FlashCardHidden;
