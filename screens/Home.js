@@ -16,7 +16,7 @@ function HopBackInCard (amountToReview, amountToLearn, amountLearnt) {
     <View style={styles.cardContainer}>
       <View style={styles.card}>
         <Text style={styles.cardText}>Hop Back In</Text>
-          <View style={{marginTop:20}}></View>
+        <View style={{ marginTop: 20 }}></View>
         <View style={styles.cardDivide1}>
           <View>
             <Text style={styles.cardSubText}>
@@ -46,14 +46,14 @@ function LearningStreakCard (currentLearningStreak, bestLearningStreak) {
   return (
     <View style={styles.cardContainer}>
       <View style={styles.card}>
-        <Text style={styles.cardText}>Learning Steak</Text>
-        <View style={{marginTop: 28}}></View>
+        <Text style={styles.cardText}>Learning Streak</Text>
+        <View style={{ marginTop: 28 }}></View>
         <View style={styles.cardDivide1}>
-          <View style={{alignItems:"center"}}>
+          <View style={styles.dividedItem}>
             <Text style={styles.cardSubText}>Current streak</Text>
             <Text style={styles.cardBigText}>{currentLearningStreak}</Text>
           </View>
-          <View style={{alignItems:"center"}}>
+          <View style={styles.dividedItem}>
             <Text style={styles.cardSubText}>Best streak</Text>
             <Text style={styles.cardBigText}>{bestLearningStreak}</Text>
           </View>
@@ -68,7 +68,28 @@ function ProgressCard (
   TodaysWordCount,
   AllTimeMinutes,
   TodaysMinutes
-) {}
+) {
+  return (
+    <View style={styles.cardContainer}>
+      <View style={styles.card}>
+        <Text style={styles.cardText}>Progress</Text>
+        <View style={styles.cardDivide2}>
+          <View style={styles.dividedItem}>
+            <Text style={[styles.cardSubText, {marginBottom: 4}]}>All time</Text>
+            <Text style={styles.cardSubText}>85{"\n"}words</Text>
+            <Text style={styles.cardSubText}>124{"\n"}minutes</Text>
+          </View>
+          <View style={styles.verticalLine}></View>
+          <View style={styles.dividedItem}>
+            <Text style={[styles.cardSubText, {marginBottom: 4}]}>Today</Text>
+            <Text style={styles.cardSubText}>10{"\n"}words</Text>
+            <Text style={styles.cardSubText}>20{"\n"}minutes</Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  )
+}
 
 function Home ({ amountToReview, amountToLearn, amountLearnt }) {
   return (
@@ -77,7 +98,7 @@ function Home ({ amountToReview, amountToLearn, amountLearnt }) {
       <ScrollView style={styles.cardView}>
         {HopBackInCard(amountToReview, amountToLearn, amountLearnt)}
         {LearningStreakCard(12, 15)}
-        {ProgressCard()}
+        {ProgressCard(85, 10, 124, 20)}
       </ScrollView>
       <Footer />
     </View>
@@ -115,16 +136,15 @@ const styles = StyleSheet.create({
   cardBigText: {
     color: 'white',
     fontSize: 40,
-    fontFamily: "Inter-Medium"
+    fontFamily: 'Inter-Medium'
   },
   cardSubText: {
     fontSize: 16,
     color: 'white',
     textAlign: 'center',
-    fontFamily: 'Inter-Medium'
+    fontFamily: 'Inter-Regular'
   },
   cardContainer: {
-
     marginTop: 33,
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -146,6 +166,21 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'space-around',
     flexDirection: 'row'
+  },
+  cardDivide2: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    flex: 1,
+    paddingTop: 7,
+    paddingBottom: 10
+  },
+  verticalLine: {
+    width: 1,
+    backgroundColor: '#D9D9D9'
+  },
+  dividedItem: {
+    alignItems: 'center',
+    flex: 1
   }
 })
 
