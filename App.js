@@ -1,20 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+
+import Home from "./screens/Home" 
+import { useFonts } from 'expo-font';
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    'Inter': require('./assets/fonts/Inter/Inter.ttf'),
+    'Inter-Black': require('./assets/fonts/Inter/Inter-Black.ttf'),
+    'Inter-Bold': require('./assets/fonts/Inter/Inter-Bold.ttf'),
+    'Inter-ExtraBold': require('./assets/fonts/Inter/Inter-ExtraBold.ttf'),
+    'Inter-Light': require('./assets/fonts/Inter/Inter-Light.ttf'),
+    'Inter-ExtraLight': require('./assets/fonts/Inter/Inter-ExtraLight.ttf'),
+    'Inter-Medium': require('./assets/fonts/Inter/Inter-Medium.ttf'),
+    'Inter-Regular': require('./assets/fonts/Inter/Inter-Regular.ttf'),
+    'Inter-SemiBold': require('./assets/fonts/Inter/Inter-SemiBold.ttf'),
+    'Inter-Thin': require('./assets/fonts/Inter/Inter-Thin.ttf')
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Home amountToReview = "27" amountLearnt="85" amountToLearn="198"/>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+

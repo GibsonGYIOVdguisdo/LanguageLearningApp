@@ -110,18 +110,18 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     fontWeight: '600',
-    fontFamily: 'Inter'
+    fontFamily: 'Inter-SemiBold'
   },
   cardBigText: {
     color: 'white',
-    fontSize: 40
+    fontSize: 40,
+    fontFamily: "Inter-Medium"
   },
   cardSubText: {
     fontSize: 16,
     color: 'white',
     textAlign: 'center',
-    fontWeight: '400',
-    fontFamily: 'Inter'
+    fontFamily: 'Inter-Medium'
   },
   cardContainer: {
 
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   },
   cardButtonText: {
     fontSize: 16,
-    fontFamily: 'Inter'
+    fontFamily: 'Inter-Medium'
   },
   cardDivide1: {
     width: '100%',

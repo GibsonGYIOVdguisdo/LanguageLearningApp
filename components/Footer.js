@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginTop: 4,
     color: "white",
-    fontFamily: "Inter"
+    fontFamily: "Inter-Medium"
   },
   footerIcon: {
     height: 27,

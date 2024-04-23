@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   headerText:{
-    fontFamily: "Inter",
+    fontFamily: "Inter-SemiBold",
     marginLeft: 15,
     color: "white",
     fontWeight:"600",
