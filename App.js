@@ -1,5 +1,6 @@
 import Home from './screens/Home'
 import Courses from './screens/Courses'
+import FlashCardHidden from './screens/FlashCardHidden'
 import { useFonts } from 'expo-font'
 
 export default function App () {
@@ -18,5 +19,11 @@ export default function App () {
   if (!fontsLoaded) {
     return null
   }
-  return <Courses />
+  return (
+    <FlashCardHidden
+      cardsCompleted='1'
+      cardsToComplete='10'
+      cardText='Wie geht es dir?'
+    />
+  )
 }
