@@ -97,7 +97,7 @@ function Home ({ amountToReview, amountToLearn, amountLearnt }) {
   return (
     <View style={styles.body}>
       <Header />
-      <ScrollView style={styles.cardView}>
+      <ScrollView style={styles.cardScroll}>
         {HopBackInCard(amountToReview, amountToLearn, amountLearnt)}
         {LearningStreakCard(12, 15)}
         {ProgressCard(85, 10, 124, 20)}
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#121212'
   },
-  cardView: {
+  cardScroll: {
     width: '100%',
     height: 'auto',
     flexDirection: 'column',

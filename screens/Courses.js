@@ -7,7 +7,8 @@ import {
   Platform,
   StatusBar,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView
 } from 'react-native'
 
 function CourseCard (courseName, amountLearnt, amountToLearn, amountToReview) {
@@ -45,9 +46,14 @@ function Courses () {
   return (
     <View style={styles.body}>
       <Header />
-      {CourseCard('Greetings', 4, 55, 55)}
-      {CourseCard('Greetings', 23, 43, 30)}
-      {CourseCard('Greetings', 0, 100, 0)}
+      <ScrollView style={styles.cardScroll}>
+        <Text style={styles.titleText}>Course Segments</Text>
+        {CourseCard('Greetings', 4, 55, 55)}
+        {CourseCard('What are you doing?', 23, 43, 30)}
+        {CourseCard('Where is the...?', 0, 100, 0)}
+        {CourseCard('Why is sergio...?', 0, 100, 0)}
+        <View style={{ height: 30 }}></View>
+      </ScrollView>
       <Footer />
     </View>
   )
@@ -58,6 +64,20 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     flex: 1,
     backgroundColor: '#121212'
+  },
+  titleText: {
+    fontSize: 20,
+    marginTop: 10,
+    fontFamily: 'Inter-SemiBold',
+    alignItems: 'center',
+    textAlign: 'center',
+    color: 'white'
+  },
+  cardScroll: {
+    width: '100%',
+    height: 'auto',
+    flexDirection: 'column',
+    overflow: 'scroll'
   },
   card: {
     width: '90%',
