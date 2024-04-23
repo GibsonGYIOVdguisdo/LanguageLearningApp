@@ -1,23 +1,34 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
-function FooterCategory (CategoryTitle, ImageSource) {
+import { useNavigation } from '@react-navigation/native';
+function FooterCategory(CategoryTitle, ImageSource, PageToSelect) {
+  const navigation = useNavigation();
   return (
-    <View style={styles.footer}>
-      <View style={styles.footerCategoryContainer}>
-        <Image style={styles.footerIcon} source={ImageSource} />
-        <Text style={styles.footerCategoryText}>{CategoryTitle}</Text>
-      </View>
-    </View>
-  )
+    <TouchableOpacity
+      style={styles.footerCategoryContainer}
+      onPress={() => navigation.navigate(PageToSelect)}
+    >
+      <Image style={styles.footerIcon} source={ImageSource} />
+      <Text style={styles.footerCategoryText}>{CategoryTitle}</Text>
+    </TouchableOpacity>
+  );
 }
 
-function Footer () {
+function Footer() {
   return (
     <View style={styles.footer}>
-      {FooterCategory('Home', require('../assets/images/home-icon.png'))}
-      {FooterCategory('Course', require('../assets/images/book.png'))}
+      {FooterCategory(
+        'Home',
+        require('../assets/images/home-icon.png'),
+        'home'
+      )}
+      {FooterCategory(
+        'Course',
+        require('../assets/images/book.png'),
+        'courses'
+      )}
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -45,6 +56,6 @@ const styles = StyleSheet.create({
     overflow: 'visible',
     resizeMode: 'contain'
   }
-})
+});
 
-export default Footer
+export default Footer;
