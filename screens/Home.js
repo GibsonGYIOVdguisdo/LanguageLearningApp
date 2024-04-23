@@ -75,15 +75,17 @@ function ProgressCard (
         <Text style={styles.cardText}>Progress</Text>
         <View style={styles.cardDivide2}>
           <View style={styles.dividedItem}>
-            <Text style={[styles.cardSubText, {marginBottom: 4}]}>All time</Text>
-            <Text style={styles.cardSubText}>85{"\n"}words</Text>
-            <Text style={styles.cardSubText}>124{"\n"}minutes</Text>
+            <Text style={[styles.cardSubText, { marginBottom: 4 }]}>
+              All time
+            </Text>
+            <Text style={styles.cardSubText}>85{'\n'}words</Text>
+            <Text style={styles.cardSubText}>124{'\n'}minutes</Text>
           </View>
           <View style={styles.verticalLine}></View>
           <View style={styles.dividedItem}>
-            <Text style={[styles.cardSubText, {marginBottom: 4}]}>Today</Text>
-            <Text style={styles.cardSubText}>10{"\n"}words</Text>
-            <Text style={styles.cardSubText}>20{"\n"}minutes</Text>
+            <Text style={[styles.cardSubText, { marginBottom: 4 }]}>Today</Text>
+            <Text style={styles.cardSubText}>10{'\n'}words</Text>
+            <Text style={styles.cardSubText}>20{'\n'}minutes</Text>
           </View>
         </View>
       </View>
