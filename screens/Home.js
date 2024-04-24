@@ -133,6 +133,30 @@ function Home({
   );
 }
 
+function HomeScreen() {
+  let amountToReview = 1;
+  let amountToLearn = 1;
+  let amountLearnt = 1;
+  let currentLearningStreak = 1;
+  let bestLearningStreak = 1;
+  let AllTimeWordCount = 1;
+  let TodaysWordCount = 1;
+  let AllTimeMinutes = 1;
+  let TodaysMinutes = 1;
+
+  return Home({
+    amountToReview,
+    amountToLearn,
+    amountLearnt,
+    currentLearningStreak,
+    bestLearningStreak,
+    AllTimeWordCount,
+    TodaysWordCount,
+    AllTimeMinutes,
+    TodaysMinutes
+  });
+}
+
 const styles = StyleSheet.create({
   body: {
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
@@ -212,4 +236,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Home;
+export default HomeScreen;
