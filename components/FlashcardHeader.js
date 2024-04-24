@@ -1,10 +1,16 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
 function Header() {
+  const navigation = useNavigation();
   return (
     <View style={styles.header}>
       <Text style={styles.headerText}>German</Text>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('home');
+        }}
+      >
         <Image
           style={styles.crossIcon}
           source={require('../assets/images/cross-icon.png')}
