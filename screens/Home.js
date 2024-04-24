@@ -77,14 +77,26 @@ function ProgressCard(
             <Text style={[styles.cardSubText, { marginBottom: 4 }]}>
               All time
             </Text>
-            <Text style={styles.cardSubText}>85{'\n'}words</Text>
-            <Text style={styles.cardSubText}>124{'\n'}minutes</Text>
+            <Text style={styles.cardSubText}>
+              {AllTimeWordCount}
+              {'\n'}words
+            </Text>
+            <Text style={styles.cardSubText}>
+              {AllTimeMinutes}
+              {'\n'}minutes
+            </Text>
           </View>
           <View style={styles.verticalLine}></View>
           <View style={styles.dividedItem}>
             <Text style={[styles.cardSubText, { marginBottom: 4 }]}>Today</Text>
-            <Text style={styles.cardSubText}>10{'\n'}words</Text>
-            <Text style={styles.cardSubText}>20{'\n'}minutes</Text>
+            <Text style={styles.cardSubText}>
+              {TodaysWordCount}
+              {'\n'}words
+            </Text>
+            <Text style={styles.cardSubText}>
+              {TodaysMinutes}
+              {'\n'}minutes
+            </Text>
           </View>
         </View>
       </View>
@@ -92,14 +104,29 @@ function ProgressCard(
   );
 }
 
-function Home({ amountToReview, amountToLearn, amountLearnt }) {
+function Home({
+  amountToReview,
+  amountToLearn,
+  amountLearnt,
+  currentLearningStreak,
+  bestLearningStreak,
+  AllTimeWordCount,
+  TodaysWordCount,
+  AllTimeMinutes,
+  TodaysMinutes
+}) {
   return (
     <View style={styles.body}>
       <Header />
       <ScrollView style={styles.cardScroll}>
         {HopBackInCard(amountToReview, amountToLearn, amountLearnt)}
-        {LearningStreakCard(12, 15)}
-        {ProgressCard(85, 10, 124, 20)}
+        {LearningStreakCard(currentLearningStreak, bestLearningStreak)}
+        {ProgressCard(
+          AllTimeWordCount,
+          TodaysWordCount,
+          AllTimeMinutes,
+          TodaysMinutes
+        )}
       </ScrollView>
       <Footer />
     </View>
