@@ -1,5 +1,6 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { useNavigation } from '@react-navigation/native';
 import {
   StyleSheet,
   View,
@@ -11,6 +12,7 @@ import {
 } from 'react-native';
 
 function HopBackInCard(amountToReview, amountToLearn, amountLearnt) {
+  const navigation = useNavigation();
   return (
     <View style={styles.cardContainer}>
       <View style={styles.card}>
@@ -31,7 +33,12 @@ function HopBackInCard(amountToReview, amountToLearn, amountLearnt) {
               {amountLearnt}/{amountToLearn}
               {'\n'}learnt
             </Text>
-            <TouchableOpacity style={styles.cardButton}>
+            <TouchableOpacity
+              style={styles.cardButton}
+              onPress={() => {
+                navigation.navigate('flashCardHidden', [[['eee', 'aaa']], 0]);
+              }}
+            >
               <Text style={styles.cardButtonText}>Learn</Text>
             </TouchableOpacity>
           </View>

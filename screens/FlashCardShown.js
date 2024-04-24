@@ -1,5 +1,6 @@
 import FlashcardHeader from '../components/FlashcardHeader';
 
+import { useNavigation } from '@react-navigation/native';
 import {
   StyleSheet,
   View,
@@ -9,31 +10,65 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-function FlashCardFooter() {
+function LoadNextCard(words, currentIndex) {
+  console.log('sss');
+  const navigation = useNavigation();
+  let nextIndex = currentIndex + 1;
+  if (nextIndex >= words.length) {
+    console.log('Home');
+    navigation.navigate('home');
+  } else {
+    console.log('next');
+  }
+}
+
+function FlashCardFooter(words, currentIndex) {
   return (
     <View style={styles.footer}>
-      <TouchableOpacity style={[styles.button, styles.terribleButton]}>
+      <TouchableOpacity
+        style={[styles.button, styles.terribleButton]}
+        onPress={() => {
+          LoadNextCard(words, currentIndex);
+        }}
+      >
         <Text style={styles.buttonText}>Terrible</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.button, styles.badButton]}>
+      <TouchableOpacity
+        style={[styles.button, styles.badButton]}
+        onPress={() => {
+          LoadNextCard(words, currentIndex);
+        }}
+      >
         <Text style={styles.buttonText}>Bad</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.button, styles.goodButton]}>
+      <TouchableOpacity
+        style={[styles.button, styles.goodButton]}
+        onPress={() => {
+          LoadNextCard(words, currentIndex);
+        }}
+      >
         <Text style={styles.buttonText}>Good</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.button, styles.perfectButton]}>
+      <TouchableOpacity
+        style={[styles.button, styles.perfectButton]}
+        onPress={() => {
+          LoadNextCard(words, currentIndex);
+        }}
+      >
         <Text style={styles.buttonText}>Perfect</Text>
       </TouchableOpacity>
     </View>
   );
 }
 
-function FlashCardShown({
+function FlashCardShown(
   cardText,
   cardTranslation,
   cardsCompleted,
-  cardsToComplete
-}) {
+  cardsToComplete,
+  words,
+  currentIndex
+) {
   return (
     <View style={styles.body}>
       <FlashcardHeader />
@@ -44,10 +79,35 @@ function FlashCardShown({
       <Text style={styles.flashcardText}>{cardText}</Text>
       <View style={styles.horizontalLine}></View>
       <Text style={styles.flashcardText}>{cardTranslation}</Text>
-      {FlashCardFooter()}
+      {FlashCardFooter(words, currentIndex)}
     </View>
   );
 }
+function FlashCardShownScreen(navigation) {
+  console.log(navigation);
+  let words = navigation.route.params[0];
+  let currentIndex = navigation.route.params[1];
+
+  console.log('VALUES');
+  console.log(words);
+  let cardText = 'aaaf';
+  console.log('1');
+  let cardTranslation = 'bbbf';
+  console.log('2');
+  let cardsCompleted = currentIndex;
+  console.log('3');
+  let cardsToComplete = '1';
+  console.log('4');
+  return FlashCardShown(
+    cardText,
+    cardTranslation,
+    cardsCompleted,
+    cardsToComplete,
+    words,
+    currentIndex
+  );
+}
+
 const styles = StyleSheet.create({
   body: {
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
@@ -104,4 +164,4 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   }
 });
-export default FlashCardShown;
+export default FlashCardShownScreen;

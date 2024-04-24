@@ -1,5 +1,6 @@
 import FlashcardHeader from '../components/FlashcardHeader';
 
+import { useNavigation } from '@react-navigation/native';
 import {
   StyleSheet,
   View,
@@ -9,7 +10,15 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-function FlashCardHidden({ cardText, cardsCompleted, cardsToComplete }) {
+function FlashCardHidden(
+  cardText,
+  cardsCompleted,
+  cardsToComplete,
+  words,
+  currentIndex
+) {
+  const navigation = useNavigation();
+  let nextIndex = currentIndex + 1;
   return (
     <View style={styles.body}>
       <FlashcardHeader />
@@ -17,12 +26,31 @@ function FlashCardHidden({ cardText, cardsCompleted, cardsToComplete }) {
         {cardsCompleted}/{cardsToComplete}
       </Text>
       <Text style={styles.flashcardText}>{cardText}</Text>
-      <TouchableOpacity style={styles.revealButton}>
+      <TouchableOpacity
+        style={styles.revealButton}
+        onPress={() => {
+          navigation.navigate('flashCardShown', [words, nextIndex]);
+        }}
+      >
         <Text style={styles.buttonText}>Show translation</Text>
       </TouchableOpacity>
     </View>
   );
 }
+
+function FlashCardHiddenScreen(navigation) {
+  let words = navigation.route.params[0];
+  let currentIndex = navigation.route.params[1];
+  let maxIndex = words.length;
+  return FlashCardHidden(
+    words[currentIndex][0],
+    currentIndex,
+    maxIndex,
+    words,
+    currentIndex
+  );
+}
+
 const styles = StyleSheet.create({
   body: {
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
@@ -56,4 +84,4 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   }
 });
-export default FlashCardHidden;
+export default FlashCardHiddenScreen;

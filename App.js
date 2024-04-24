@@ -1,7 +1,7 @@
-import Home from './screens/Home';
+import HomeScreen from './screens/Home';
 import Courses from './screens/Courses';
-import FlashCardHidden from './screens/FlashCardHidden';
-import FlashCardShown from './screens/FlashCardShown';
+import FlashCardHiddenScreen from './screens/FlashCardHidden';
+import FlashCardShownScreen from './screens/FlashCardShown';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
@@ -10,7 +10,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    Inter: require('./assets/fonts/Inter/Inter.ttf'),
+    'Inter': require('./assets/fonts/Inter/Inter.ttf'),
     'Inter-Black': require('./assets/fonts/Inter/Inter-Black.ttf'),
     'Inter-Bold': require('./assets/fonts/Inter/Inter-Bold.ttf'),
     'Inter-ExtraBold': require('./assets/fonts/Inter/Inter-ExtraBold.ttf'),
@@ -31,7 +31,12 @@ export default function App() {
           headerShown: false
         }}
       >
-        <Stack.Screen name="home" component={Home} />
+        <Stack.Screen name="home" component={HomeScreen} />
+        <Stack.Screen name="flashCardShown" component={FlashCardShownScreen} />
+        <Stack.Screen
+          name="flashCardHidden"
+          component={FlashCardHiddenScreen}
+        />
         <Stack.Screen name="courses" component={Courses} />
       </Stack.Navigator>
     </NavigationContainer>
