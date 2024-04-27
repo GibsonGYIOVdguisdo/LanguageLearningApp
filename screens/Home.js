@@ -11,6 +11,26 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+function IsWordLeant(word) {
+  return false;
+}
+
+function PickRandomWordsToLearn() {
+  const languageLocation = '../languageCourses/german.json';
+  const languageCourse = require(languageLocation);
+  let words = [];
+  for (let section in languageCourse.German) {
+    for (let word in languageCourse.German[section]) {
+      if (words.length >= 10) {
+        break;
+      }
+      if (!IsWordLeant(word)) {
+        words.push([word, languageCourse.German[section][word]]);
+      }
+    }
+  }
+  return words;
+}
 function HopBackInCard(amountToReview, amountToLearn, amountLearnt) {
   const navigation = useNavigation();
   return (
@@ -36,7 +56,10 @@ function HopBackInCard(amountToReview, amountToLearn, amountLearnt) {
             <TouchableOpacity
               style={styles.cardButton}
               onPress={() => {
-                navigation.navigate('flashCardHidden', [[['eee', 'aaa']], 0]);
+                navigation.navigate('flashCardHidden', [
+                  PickRandomWordsToLearn(),
+                  0
+                ]);
               }}
             >
               <Text style={styles.cardButtonText}>Learn</Text>
