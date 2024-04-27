@@ -32,12 +32,20 @@ export default function App() {
         }}
       >
         <Stack.Screen name="home" component={HomeScreen} />
-        <Stack.Screen name="flashCardShown" component={FlashCardShownScreen} />
+        <Stack.Screen
+          name="flashCardShown"
+          component={FlashCardShownScreen}
+          options={{ animation: 'none' }}
+        />
         <Stack.Screen
           name="flashCardHidden"
           component={FlashCardHiddenScreen}
         />
-        <Stack.Screen name="courses" component={Courses} />
+        <Stack.Screen
+          name="courses"
+          component={Courses}
+          options={{ animation: 'slide_from_right' }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
