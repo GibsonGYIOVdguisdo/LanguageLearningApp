@@ -84,9 +84,8 @@ function FlashCardShown(
 function FlashCardShownScreen(navigation) {
   let words = navigation.route.params[0];
   let currentIndex = navigation.route.params[1];
-
-  let cardText = words[0][0];
-  let cardTranslation = words[0][1];
+  let cardText = words[currentIndex][0];
+  let cardTranslation = words[currentIndex][1];
   let cardsCompleted = currentIndex;
   let cardsToComplete = words.length;
   return FlashCardShown(

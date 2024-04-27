@@ -18,7 +18,6 @@ function FlashCardHidden(
   currentIndex
 ) {
   const navigation = useNavigation();
-  let nextIndex = currentIndex + 1;
   return (
     <View style={styles.body}>
       <FlashcardHeader />
@@ -29,7 +28,7 @@ function FlashCardHidden(
       <TouchableOpacity
         style={styles.revealButton}
         onPress={() => {
-          navigation.navigate('flashCardShown', [words, nextIndex]);
+          navigation.navigate('flashCardShown', [words, currentIndex]);
         }}
       >
         <Text style={styles.buttonText}>Show translation</Text>
