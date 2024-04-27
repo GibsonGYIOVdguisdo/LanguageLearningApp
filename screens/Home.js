@@ -15,7 +15,7 @@ function IsWordLeant(word) {
   return false;
 }
 
-function PickRandomWordsToLearn() {
+function GetNextWordsToLearn() {
   const languageLocation = '../languageCourses/german.json';
   const languageCourse = require(languageLocation);
   let words = [];
@@ -57,7 +57,7 @@ function HopBackInCard(amountToReview, amountToLearn, amountLearnt) {
               style={styles.cardButton}
               onPress={() => {
                 navigation.navigate('flashCardHidden', [
-                  PickRandomWordsToLearn(),
+                  GetNextWordsToLearn(),
                   0
                 ]);
               }}
