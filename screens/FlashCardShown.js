@@ -10,25 +10,23 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-function LoadNextCard(words, currentIndex) {
-  console.log('sss');
-  const navigation = useNavigation();
+function LoadNextCard(navigation, words, currentIndex) {
   let nextIndex = currentIndex + 1;
   if (nextIndex >= words.length) {
-    console.log('Home');
     navigation.navigate('home');
   } else {
-    console.log('next');
+    navigation.navigate('flashCardHidden', [words, nextIndex]);
   }
 }
 
 function FlashCardFooter(words, currentIndex) {
+  const navigation = useNavigation();
   return (
     <View style={styles.footer}>
       <TouchableOpacity
         style={[styles.button, styles.terribleButton]}
         onPress={() => {
-          LoadNextCard(words, currentIndex);
+          LoadNextCard(navigation, words, currentIndex);
         }}
       >
         <Text style={styles.buttonText}>Terrible</Text>
@@ -36,7 +34,7 @@ function FlashCardFooter(words, currentIndex) {
       <TouchableOpacity
         style={[styles.button, styles.badButton]}
         onPress={() => {
-          LoadNextCard(words, currentIndex);
+          LoadNextCard(navigation, words, currentIndex);
         }}
       >
         <Text style={styles.buttonText}>Bad</Text>
@@ -44,7 +42,7 @@ function FlashCardFooter(words, currentIndex) {
       <TouchableOpacity
         style={[styles.button, styles.goodButton]}
         onPress={() => {
-          LoadNextCard(words, currentIndex);
+          LoadNextCard(navigation, words, currentIndex);
         }}
       >
         <Text style={styles.buttonText}>Good</Text>
@@ -52,7 +50,7 @@ function FlashCardFooter(words, currentIndex) {
       <TouchableOpacity
         style={[styles.button, styles.perfectButton]}
         onPress={() => {
-          LoadNextCard(words, currentIndex);
+          LoadNextCard(navigation, words, currentIndex);
         }}
       >
         <Text style={styles.buttonText}>Perfect</Text>
@@ -84,20 +82,13 @@ function FlashCardShown(
   );
 }
 function FlashCardShownScreen(navigation) {
-  console.log(navigation);
   let words = navigation.route.params[0];
   let currentIndex = navigation.route.params[1];
 
-  console.log('VALUES');
-  console.log(words);
-  let cardText = 'aaaf';
-  console.log('1');
-  let cardTranslation = 'bbbf';
-  console.log('2');
+  let cardText = words[0][0];
+  let cardTranslation = words[0][1];
   let cardsCompleted = currentIndex;
-  console.log('3');
-  let cardsToComplete = '1';
-  console.log('4');
+  let cardsToComplete = words.length;
   return FlashCardShown(
     cardText,
     cardTranslation,
