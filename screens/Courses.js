@@ -1,5 +1,6 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { useNavigation } from '@react-navigation/native';
 
 import {
   StyleSheet,
@@ -11,7 +12,42 @@ import {
   ScrollView
 } from 'react-native';
 
+function IsWordLeant(word) {
+  return false;
+}
+
+function GetAllCourseCards() {
+  let returnArray = [];
+  for (let section of GetCourseSections()) {
+    returnArray.push(CourseCard(section, 1, 1, 1));
+  }
+  return returnArray;
+}
+
+function GetCourseSections() {
+  const languageLocation = '../languageCourses/german.json';
+  const languageCourse = require(languageLocation);
+  const sections = Object.keys(languageCourse.German);
+  return sections;
+}
+function GetNextWordsToLearn(section) {
+  const languageLocation = '../languageCourses/german.json';
+  const languageCourse = require(languageLocation);
+  let words = [];
+  for (let word in languageCourse.German[section]) {
+    if (words.length >= 10) {
+      break;
+    }
+    if (!IsWordLeant(word)) {
+      words.push([word, languageCourse.German[section][word]]);
+    }
+  }
+  return words;
+}
+
 function CourseCard(courseName, amountLearnt, amountToLearn, amountToReview) {
+  const navigation = useNavigation();
+  navigation.navi;
   return (
     <View style={styles.cardContainer}>
       <View style={styles.card}>
@@ -32,7 +68,15 @@ function CourseCard(courseName, amountLearnt, amountToLearn, amountToReview) {
               {amountLearnt}/{amountToLearn}
               {'\n'}learnt
             </Text>
-            <TouchableOpacity style={styles.cardButton}>
+            <TouchableOpacity
+              style={styles.cardButton}
+              onPress={() => {
+                navigation.navigate('flashCardHidden', [
+                  GetNextWordsToLearn(courseName),
+                  0
+                ]);
+              }}
+            >
               <Text style={styles.cardButtonText}>Learn</Text>
             </TouchableOpacity>
           </View>
@@ -48,10 +92,7 @@ function Courses() {
       <Header />
       <ScrollView style={styles.cardScroll}>
         <Text style={styles.titleText}>Course Segments</Text>
-        {CourseCard('Greetings', 4, 55, 55)}
-        {CourseCard('What are you doing?', 23, 43, 30)}
-        {CourseCard('Where is the...?', 0, 100, 0)}
-        {CourseCard('Why is sergio...?', 0, 100, 0)}
+        {GetAllCourseCards()}
         <View style={{ height: 30 }}></View>
       </ScrollView>
       <Footer />
