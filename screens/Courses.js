@@ -1,7 +1,7 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useNavigation } from '@react-navigation/native';
-
+import IsWordLeant from '../utils/WordLearning';
 import {
   StyleSheet,
   View,
@@ -12,21 +12,26 @@ import {
   ScrollView
 } from 'react-native';
 
-function IsWordLeant(word) {
-  return false;
-}
+const languageLocation = '../languageCourses/german.json';
+const languageCourse = require(languageLocation);
 
 function GetAllCourseCards() {
   let returnArray = [];
   for (let section of GetCourseSections()) {
-    returnArray.push(CourseCard(section, 1, 1, 1));
+    let allWords = Object.keys(languageCourse.German[section]);
+    let wordCount = allWords.length;
+    let learntWords = 0;
+    for (word in allWords) {
+      if (IsWordLeant(word)) {
+        learntWords += 1;
+      }
+    }
+    returnArray.push(CourseCard(section, learntWords, wordCount, 1));
   }
   return returnArray;
 }
 
 function GetCourseSections() {
-  const languageLocation = '../languageCourses/german.json';
-  const languageCourse = require(languageLocation);
   const sections = Object.keys(languageCourse.German);
   return sections;
 }
