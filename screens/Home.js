@@ -1,6 +1,7 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useNavigation } from '@react-navigation/native';
+import IsWordLeant from '../utils/WordLearning';
 import {
   StyleSheet,
   View,
@@ -10,11 +11,6 @@ import {
   ScrollView,
   TouchableOpacity
 } from 'react-native';
-
-function IsWordLeant(word) {
-  return false;
-}
-
 function GetNextWordsToLearn() {
   const languageLocation = '../languageCourses/german.json';
   const languageCourse = require(languageLocation);
