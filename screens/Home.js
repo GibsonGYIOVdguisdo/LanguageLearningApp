@@ -2,6 +2,8 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useNavigation } from '@react-navigation/native';
 import IsWordLeant from '../utils/WordLearning';
+import CardButton from '../components/CardButton';
+
 import {
   StyleSheet,
   View,
@@ -40,26 +42,22 @@ function HopBackInCard(amountToReview, amountToLearn, amountLearnt) {
               {amountToReview}
               {'\n'}to review
             </Text>
-            <TouchableOpacity style={styles.cardButton}>
-              <Text style={styles.cardButtonText}>Review</Text>
-            </TouchableOpacity>
+            <CardButton text="Review" />
           </View>
           <View>
             <Text style={styles.cardSubText}>
               {amountLearnt}/{amountToLearn}
               {'\n'}learnt
             </Text>
-            <TouchableOpacity
-              style={styles.cardButton}
+            <CardButton
+              text="Learn"
               onPress={() => {
                 navigation.navigate('flashCardHidden', [
                   GetNextWordsToLearn(),
                   0
                 ]);
               }}
-            >
-              <Text style={styles.cardButtonText}>Learn</Text>
-            </TouchableOpacity>
+            />
           </View>
         </View>
       </View>
@@ -227,18 +225,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%'
-  },
-  cardButton: {
-    width: 136,
-    height: 53,
-    borderRadius: 12,
-    backgroundColor: '#A0D39C',
-    alignItems: 'center',
-    justifyContent: 'space-around'
-  },
-  cardButtonText: {
-    fontSize: 16,
-    fontFamily: 'Inter-Medium'
   },
   cardDivide1: {
     width: '100%',
