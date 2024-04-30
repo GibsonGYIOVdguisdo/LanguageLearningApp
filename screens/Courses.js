@@ -54,7 +54,7 @@ function CourseCard(courseName, amountLearnt, amountToLearn, amountToReview) {
   const navigation = useNavigation();
   navigation.navi;
   return (
-    <View style={styles.cardContainer}>
+    <View style={styles.cardContainer} key={courseName}>
       <View style={styles.card}>
         <Text style={styles.cardText}>{courseName}</Text>
         <View style={{ marginTop: 20 }}></View>
