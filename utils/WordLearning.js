@@ -30,4 +30,4 @@ function GetReviewDate(word) {
   }
   return new Date();
 }
-export default { IsWordLearnt, LearnWord, GetReviewDate, GetReviewGap };
+export { IsWordLearnt, LearnWord, GetReviewDate, GetReviewGap };

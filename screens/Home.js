@@ -1,7 +1,7 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useNavigation } from '@react-navigation/native';
-import IsWordLeant from '../utils/WordLearning';
+import { IsWordLearnt } from '../utils/WordLearning';
 import CardButton from '../components/CardButton';
 
 import {
@@ -10,9 +10,9 @@ import {
   StatusBar,
   Platform,
   Text,
-  ScrollView,
-  TouchableOpacity
+  ScrollView
 } from 'react-native';
+
 function GetNextWordsToLearn() {
   const languageLocation = '../languageCourses/german.json';
   const languageCourse = require(languageLocation);
@@ -22,7 +22,7 @@ function GetNextWordsToLearn() {
       if (words.length >= 10) {
         break;
       }
-      if (!IsWordLeant(word)) {
+      if (!IsWordLearnt(word)) {
         words.push([word, languageCourse.German[section][word]]);
       }
     }

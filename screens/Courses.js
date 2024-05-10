@@ -1,7 +1,7 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useNavigation } from '@react-navigation/native';
-import IsWordLeant from '../utils/WordLearning';
+import { IsWordLearnt } from '../utils/WordLearning';
 import CardButton from '../components/CardButton';
 import {
   StyleSheet,
@@ -23,7 +23,7 @@ function GetAllCourseCards() {
     let wordCount = allWords.length;
     let learntWords = 0;
     for (word in allWords) {
-      if (IsWordLeant(word)) {
+      if (IsWordLearnt(word)) {
         learntWords += 1;
       }
     }
@@ -44,7 +44,7 @@ function GetNextWordsToLearn(section) {
     if (words.length >= 10) {
       break;
     }
-    if (!IsWordLeant(word)) {
+    if (!IsWordLearnt(word)) {
       words.push([word, languageCourse.German[section][word]]);
     }
   }
