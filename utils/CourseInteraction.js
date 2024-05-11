@@ -35,4 +35,15 @@ function GetAllWordPairs(courseName, section) {
   return words;
 }
 
-export { GetCourse, GetAllWordPairs, GetAllWords, GetAllSections };
+function GetTranslation(courseName, section, word) {
+  const wordPairs = GetAllWordPairs(courseName, section);
+  return wordPairs[word];
+}
+
+export {
+  GetCourse,
+  GetTranslation,
+  GetAllWordPairs,
+  GetAllWords,
+  GetAllSections
+};
