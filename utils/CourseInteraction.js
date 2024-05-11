@@ -18,7 +18,7 @@ function GetAllWords(courseName, section) {
   }
   let words = [];
   for (section of GetAllSections(courseName)) {
-    words.concat(GetAllWords(courseName, section));
+    words = words.concat(GetAllWords(courseName, section));
   }
   return words;
 }
