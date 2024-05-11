@@ -3,6 +3,8 @@ import Footer from '../components/Footer';
 import { useNavigation } from '@react-navigation/native';
 import { IsWordLearnt } from '../utils/WordLearning';
 import CardButton from '../components/CardButton';
+import { useEffect, useState } from 'react';
+
 import {
   StyleSheet,
   View,
@@ -16,18 +18,20 @@ import {
 const languageLocation = '../languageCourses/german.json';
 const languageCourse = require(languageLocation);
 
-function GetAllCourseCards() {
+async function GetAllCourseCards(navigation) {
   let returnArray = [];
   for (let section of GetCourseSections()) {
     let allWords = Object.keys(languageCourse.German[section]);
     let wordCount = allWords.length;
     let learntWords = 0;
-    for (word in allWords) {
-      if (IsWordLearnt(word)) {
+    for (word of allWords) {
+      if (await IsWordLearnt(word)) {
         learntWords += 1;
       }
     }
-    returnArray.push(CourseCard(section, learntWords, wordCount, 1));
+    returnArray.push(
+      CourseCard(navigation, section, learntWords, wordCount, 1)
+    );
   }
   return returnArray;
 }
@@ -36,7 +40,7 @@ function GetCourseSections() {
   const sections = Object.keys(languageCourse.German);
   return sections;
 }
-function GetNextWordsToLearn(section) {
+async function GetNextWordsToLearn(section) {
   const languageLocation = '../languageCourses/german.json';
   const languageCourse = require(languageLocation);
   let words = [];
@@ -44,16 +48,20 @@ function GetNextWordsToLearn(section) {
     if (words.length >= 10) {
       break;
     }
-    if (!IsWordLearnt(word)) {
+    if (!(await IsWordLearnt(word))) {
       words.push([word, languageCourse.German[section][word]]);
     }
   }
   return words;
 }
 
-function CourseCard(courseName, amountLearnt, amountToLearn, amountToReview) {
-  const navigation = useNavigation();
-  navigation.navi;
+function CourseCard(
+  navigation,
+  courseName,
+  amountLearnt,
+  amountToLearn,
+  amountToReview
+) {
   return (
     <View style={styles.cardContainer} key={courseName}>
       <View style={styles.card}>
@@ -75,10 +83,9 @@ function CourseCard(courseName, amountLearnt, amountToLearn, amountToReview) {
             <CardButton
               text="Learn"
               onPress={() => {
-                navigation.navigate('flashCardHidden', [
-                  GetNextWordsToLearn(courseName),
-                  0
-                ]);
+                GetNextWordsToLearn(courseName).then((words) => {
+                  navigation.navigate('flashCardHidden', [words, 0]);
+                });
               }}
             />
           </View>
@@ -89,12 +96,20 @@ function CourseCard(courseName, amountLearnt, amountToLearn, amountToReview) {
 }
 
 function Courses() {
+  const [courseCards, setCourseCards] = useState([]);
+  const navigation = useNavigation();
+  useEffect(() => {
+    GetAllCourseCards(navigation).then((result) => {
+      setCourseCards(result);
+    });
+  }, []);
+
   return (
     <View style={styles.body}>
       <Header />
       <ScrollView style={styles.cardScroll}>
         <Text style={styles.titleText}>Course Segments</Text>
-        {GetAllCourseCards()}
+        {courseCards}
         <View style={{ height: 30 }}></View>
       </ScrollView>
       <Footer />
