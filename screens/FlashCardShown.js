@@ -1,5 +1,5 @@
 import FlashcardHeader from '../components/FlashcardHeader';
-
+import { IsWordPerfected, LearnWord } from '../utils/WordLearning';
 import { useNavigation } from '@react-navigation/native';
 import {
   StyleSheet,
@@ -19,6 +19,16 @@ function LoadNextCard(navigation, words, currentIndex) {
   }
 }
 
+async function ButtonTrigger(navigation, words, currentIndex, button) {
+  const wordCouple = words[currentIndex];
+  const word = wordCouple[0];
+  await LearnWord(word, button);
+  if (!(await IsWordPerfected(word))) {
+    words.push(wordCouple);
+  }
+  LoadNextCard(navigation, words, currentIndex);
+}
+
 function FlashCardFooter(words, currentIndex) {
   const navigation = useNavigation();
   return (
@@ -26,7 +36,7 @@ function FlashCardFooter(words, currentIndex) {
       <TouchableOpacity
         style={[styles.button, styles.terribleButton]}
         onPress={() => {
-          LoadNextCard(navigation, words, currentIndex);
+          ButtonTrigger(navigation, words, currentIndex, 'terrible');
         }}
       >
         <Text style={styles.buttonText}>Terrible</Text>
@@ -34,7 +44,7 @@ function FlashCardFooter(words, currentIndex) {
       <TouchableOpacity
         style={[styles.button, styles.badButton]}
         onPress={() => {
-          LoadNextCard(navigation, words, currentIndex);
+          ButtonTrigger(navigation, words, currentIndex, 'bad');
         }}
       >
         <Text style={styles.buttonText}>Bad</Text>
@@ -42,7 +52,7 @@ function FlashCardFooter(words, currentIndex) {
       <TouchableOpacity
         style={[styles.button, styles.goodButton]}
         onPress={() => {
-          LoadNextCard(navigation, words, currentIndex);
+          ButtonTrigger(navigation, words, currentIndex, 'good');
         }}
       >
         <Text style={styles.buttonText}>Good</Text>
@@ -50,7 +60,7 @@ function FlashCardFooter(words, currentIndex) {
       <TouchableOpacity
         style={[styles.button, styles.perfectButton]}
         onPress={() => {
-          LoadNextCard(navigation, words, currentIndex);
+          ButtonTrigger(navigation, words, currentIndex, 'perfect');
         }}
       >
         <Text style={styles.buttonText}>Perfect</Text>
