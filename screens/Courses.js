@@ -1,10 +1,10 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useNavigation } from '@react-navigation/native';
-import { IsWordLearnt } from '../utils/WordLearning';
+import { IsWordLearnt, DoesWordNeedReview } from '../utils/WordLearning';
 import CardButton from '../components/CardButton';
 import { useEffect, useState } from 'react';
-
+import { GetAllSections, GetAllWords } from '../utils/CourseInteraction';
 import {
   StyleSheet,
   View,
@@ -15,30 +15,26 @@ import {
   ScrollView
 } from 'react-native';
 
-const languageLocation = '../languageCourses/german.json';
-const languageCourse = require(languageLocation);
-
 async function GetAllCourseCards(navigation) {
   let returnArray = [];
-  for (let section of GetCourseSections()) {
-    let allWords = Object.keys(languageCourse.German[section]);
+  const sections = GetAllSections('German');
+  for (let section of sections) {
+    let allWords = GetAllWords('German', section);
     let wordCount = allWords.length;
     let learntWords = 0;
+    let wordsToReview = 0;
     for (word of allWords) {
       if (await IsWordLearnt(word)) {
         learntWords += 1;
+      } else if (await DoesWordNeedReview(word)) {
+        wordsToReview += 1;
       }
     }
     returnArray.push(
-      CourseCard(navigation, section, learntWords, wordCount, 1)
+      CourseCard(navigation, section, learntWords, wordCount, wordsToReview)
     );
   }
   return returnArray;
-}
-
-function GetCourseSections() {
-  const sections = Object.keys(languageCourse.German);
-  return sections;
 }
 async function GetNextWordsToLearn(section) {
   const languageLocation = '../languageCourses/german.json';
