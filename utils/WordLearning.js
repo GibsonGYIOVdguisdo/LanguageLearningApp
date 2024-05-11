@@ -19,6 +19,13 @@ async function IsWordLearnt(word) {
   return false;
 }
 
+async function DoesWordNeedReview(word) {
+  const storedVal = await AsyncStorage.getItem('words_german_progress_' + word);
+  if (storedVal) {
+    return parseInt(storedVal) != -1 && parseInt(storedVal) < 4;
+  }
+  return false;
+}
 async function IsWordPerfected(word) {
   const storedVal = await AsyncStorage.getItem('words_german_progress_' + word);
   if (storedVal) {
@@ -58,5 +65,6 @@ export {
   LearnWord,
   GetWordProgress,
   IsWordPerfected,
-  GetDecayDate
+  GetDecayDate,
+  DoesWordNeedReview
 };
