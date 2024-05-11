@@ -4,14 +4,17 @@ import { useNavigation } from '@react-navigation/native';
 import { IsWordLearnt, DoesWordNeedReview } from '../utils/WordLearning';
 import CardButton from '../components/CardButton';
 import { useEffect, useState } from 'react';
-import { GetAllSections, GetAllWords } from '../utils/CourseInteraction';
+import {
+  GetAllSections,
+  GetAllWords,
+  GetTranslation
+} from '../utils/CourseInteraction';
 import {
   StyleSheet,
   View,
   Platform,
   StatusBar,
   Text,
-  TouchableOpacity,
   ScrollView
 } from 'react-native';
 
@@ -36,17 +39,43 @@ async function GetAllCourseCards(navigation) {
   }
   return returnArray;
 }
-async function GetNextWordsToLearn(section) {
-  const languageLocation = '../languageCourses/german.json';
-  const languageCourse = require(languageLocation);
+
+async function GetNextWordsToReview(section) {
   let words = [];
-  for (let word in languageCourse.German[section]) {
+  let sectionWords = await GetAllWords('German', section);
+  for (let word of sectionWords) {
+    if (words.length >= 10) {
+      break;
+    }
+    if (await DoesWordNeedReview(word)) {
+      words.push([word, GetTranslation('German', section, word)]);
+    }
+  }
+  if (words.length === 0) {
+    const loopCount = Math.min(10, sectionWords.length);
+    console.log('chosenIndex, chosenWord');
+    for (let i = 0; i < loopCount; i++) {
+      let chosenIndex = Math.floor(Math.random() * sectionWords.length);
+      let chosenWord = sectionWords[chosenIndex];
+      sectionWords.splice(chosenIndex, 1);
+      words.push([chosenWord, GetTranslation('German', section, chosenWord)]);
+    }
+  }
+  return words;
+}
+
+async function GetNextWordsToLearn(section) {
+  let words = [];
+  for (let word of await GetAllWords('German', section)) {
     if (words.length >= 10) {
       break;
     }
     if (!(await IsWordLearnt(word))) {
-      words.push([word, languageCourse.German[section][word]]);
+      words.push([word, GetTranslation('German', section, word)]);
     }
+  }
+  if (words.length === 0) {
+    words = GetNextWordsToReview(section);
   }
   return words;
 }
@@ -69,7 +98,14 @@ function CourseCard(
               {amountToReview}
               {'\n'}to review
             </Text>
-            <CardButton text="Review" />
+            <CardButton
+              text="Review"
+              onPress={() => {
+                GetNextWordsToReview(courseName).then((words) => {
+                  navigation.navigate('flashCardHidden', [words, 0]);
+                });
+              }}
+            />
           </View>
           <View>
             <Text style={styles.cardSubText}>
