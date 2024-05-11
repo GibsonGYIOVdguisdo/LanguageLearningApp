@@ -5,10 +5,10 @@ import { IsWordLearnt, DoesWordNeedReview } from '../utils/WordLearning';
 import CardButton from '../components/CardButton';
 import { useEffect, useState } from 'react';
 import {
-  GetAllSections,
-  GetAllWords,
-  GetTranslation
-} from '../utils/CourseInteraction';
+  ChooseWordsToLearn,
+  ChooseWordsToReview
+} from '../utils/FlashCardChoosing';
+import { GetAllSections, GetAllWords } from '../utils/CourseInteraction';
 import {
   StyleSheet,
   View,
@@ -27,10 +27,11 @@ async function GetAllCourseCards(navigation) {
     let learntWords = 0;
     let wordsToReview = 0;
     for (word of allWords) {
+      if (await DoesWordNeedReview(word)) {
+        wordsToReview += 1;
+      }
       if (await IsWordLearnt(word)) {
         learntWords += 1;
-      } else if (await DoesWordNeedReview(word)) {
-        wordsToReview += 1;
       }
     }
     returnArray.push(
@@ -38,46 +39,6 @@ async function GetAllCourseCards(navigation) {
     );
   }
   return returnArray;
-}
-
-async function GetNextWordsToReview(section) {
-  let words = [];
-  let sectionWords = await GetAllWords('German', section);
-  for (let word of sectionWords) {
-    if (words.length >= 10) {
-      break;
-    }
-    if (await DoesWordNeedReview(word)) {
-      words.push([word, GetTranslation('German', section, word)]);
-    }
-  }
-  if (words.length === 0) {
-    const loopCount = Math.min(10, sectionWords.length);
-    console.log('chosenIndex, chosenWord');
-    for (let i = 0; i < loopCount; i++) {
-      let chosenIndex = Math.floor(Math.random() * sectionWords.length);
-      let chosenWord = sectionWords[chosenIndex];
-      sectionWords.splice(chosenIndex, 1);
-      words.push([chosenWord, GetTranslation('German', section, chosenWord)]);
-    }
-  }
-  return words;
-}
-
-async function GetNextWordsToLearn(section) {
-  let words = [];
-  for (let word of await GetAllWords('German', section)) {
-    if (words.length >= 10) {
-      break;
-    }
-    if (!(await IsWordLearnt(word))) {
-      words.push([word, GetTranslation('German', section, word)]);
-    }
-  }
-  if (words.length === 0) {
-    words = GetNextWordsToReview(section);
-  }
-  return words;
 }
 
 function CourseCard(
@@ -101,7 +62,7 @@ function CourseCard(
             <CardButton
               text="Review"
               onPress={() => {
-                GetNextWordsToReview(courseName).then((words) => {
+                ChooseWordsToReview(courseName).then((words) => {
                   navigation.navigate('flashCardHidden', [words, 0]);
                 });
               }}
@@ -115,7 +76,7 @@ function CourseCard(
             <CardButton
               text="Learn"
               onPress={() => {
-                GetNextWordsToLearn(courseName).then((words) => {
+                ChooseWordsToLearn(courseName).then((words) => {
                   navigation.navigate('flashCardHidden', [words, 0]);
                 });
               }}

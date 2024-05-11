@@ -1,9 +1,11 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useNavigation } from '@react-navigation/native';
-import { IsWordLearnt } from '../utils/WordLearning';
 import CardButton from '../components/CardButton';
-
+import {
+  ChooseWordsToLearn,
+  ChooseWordsToReview
+} from '../utils/FlashCardChoosing';
 import {
   StyleSheet,
   View,
@@ -13,22 +15,6 @@ import {
   ScrollView
 } from 'react-native';
 
-function GetNextWordsToLearn() {
-  const languageLocation = '../languageCourses/german.json';
-  const languageCourse = require(languageLocation);
-  let words = [];
-  for (let section in languageCourse.German) {
-    for (let word in languageCourse.German[section]) {
-      if (words.length >= 10) {
-        break;
-      }
-      if (!IsWordLearnt(word)) {
-        words.push([word, languageCourse.German[section][word]]);
-      }
-    }
-  }
-  return words;
-}
 function HopBackInCard(amountToReview, amountToLearn, amountLearnt) {
   const navigation = useNavigation();
   return (
@@ -42,7 +28,14 @@ function HopBackInCard(amountToReview, amountToLearn, amountLearnt) {
               {amountToReview}
               {'\n'}to review
             </Text>
-            <CardButton text="Review" />
+            <CardButton
+              text="Review"
+              onPress={() => {
+                ChooseWordsToReview().then((words) => {
+                  navigation.navigate('flashCardHidden', [words, 0]);
+                });
+              }}
+            />
           </View>
           <View>
             <Text style={styles.cardSubText}>
@@ -52,10 +45,9 @@ function HopBackInCard(amountToReview, amountToLearn, amountLearnt) {
             <CardButton
               text="Learn"
               onPress={() => {
-                navigation.navigate('flashCardHidden', [
-                  GetNextWordsToLearn(),
-                  0
-                ]);
+                ChooseWordsToLearn().then((words) => {
+                  navigation.navigate('flashCardHidden', [words, 0]);
+                });
               }}
             />
           </View>
