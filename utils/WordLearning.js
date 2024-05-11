@@ -14,7 +14,6 @@ const learnAmount = {
 async function IsWordLearnt(word) {
   const storedVal = await AsyncStorage.getItem('words_german_progress_' + word);
   if (storedVal) {
-    console.log(word, storedVal);
     return parseInt(storedVal) >= 4;
   }
   return false;
