@@ -1,33 +1,63 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Pressable } from 'react-native';
 
-function IsWordLearnt(word) {
-  const storedVal = AsyncStorage.getItem('words_german_progress_' + word);
+// How often a decay is done in days
+const decayInterval = 2;
+
+const learnAmount = {
+  'terrible': 0,
+  'bad': 1,
+  'good': 2,
+  'perfect': 4
+};
+
+async function IsWordLearnt(word) {
+  const storedVal = await AsyncStorage.getItem('words_german_progress_' + word);
   if (storedVal) {
-    return parseInt(storedVal) > 0;
+    console.log(word, storedVal);
+    return parseInt(storedVal) >= 4;
   }
   return false;
 }
 
-function LearnWord(word) {
-  let date = new Date().getDate() + 1;
-  AsyncStorage.setItem('words_german_progress_' + word, '1');
-  AsyncStorage.setItem('words_german_lastGap_' + word, '1');
-  AsyncStorage.setItem('words_german_nextReview_' + word, Date.toString(date));
+async function IsWordPerfected(word) {
+  const storedVal = await AsyncStorage.getItem('words_german_progress_' + word);
+  if (storedVal) {
+    return parseInt(storedVal) >= 5;
+  }
+  return false;
 }
 
-function GetReviewGap(word) {
-  const storedVal = AsyncStorage.getItem('words_german_lastGap_' + word);
+async function GetWordProgress(word) {
+  const storedVal = await AsyncStorage.getItem('words_german_progress_' + word);
   if (storedVal) {
     return parseInt(storedVal);
   }
-  return 0;
+  return -1;
 }
 
-function GetReviewDate(word) {
-  const storedVal = AsyncStorage.getItem('words_german_nextReview_' + word);
+async function GetDecayDate(word) {
+  const storedVal = await AsyncStorage.getItem('words_german_decay_' + word);
   if (storedVal) {
     return Date.parse(storedVal);
   }
-  return new Date();
+  return false;
 }
-export { IsWordLearnt, LearnWord, GetReviewDate, GetReviewGap };
+
+async function LearnWord(word, buttonPressed) {
+  const progress = await GetWordProgress(word);
+  const progressIncrement = learnAmount[buttonPressed];
+  const newProgress = progress + progressIncrement;
+  let decayDate = new Date();
+  decayDate.setDate(decayDate.getDate() + decayInterval);
+  AsyncStorage.setItem('words_german_progress_' + word, newProgress.toString());
+  AsyncStorage.setItem('words_german_decay_' + word, Date.toString(decayDate));
+}
+
+export {
+  IsWordLearnt,
+  LearnWord,
+  GetWordProgress,
+  IsWordPerfected,
+  GetDecayDate
+};
