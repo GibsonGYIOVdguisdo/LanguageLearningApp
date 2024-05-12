@@ -1,19 +1,55 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-
+import { useNavigation } from '@react-navigation/native';
+import { IsWordLearnt, DoesWordNeedReview } from '../utils/WordLearning';
+import CardButton from '../components/CardButton';
+import { useEffect, useState } from 'react';
+import {
+  ChooseWordsToLearn,
+  ChooseWordsToReview
+} from '../utils/FlashCardChoosing';
+import { GetAllSections, GetAllWords } from '../utils/CourseInteraction';
 import {
   StyleSheet,
   View,
   Platform,
   StatusBar,
   Text,
-  TouchableOpacity,
   ScrollView
 } from 'react-native';
 
-function CourseCard(courseName, amountLearnt, amountToLearn, amountToReview) {
+async function GetAllCourseCards(navigation) {
+  let returnArray = [];
+  const sections = GetAllSections('German');
+  for (let section of sections) {
+    let allWords = GetAllWords('German', section);
+    let wordCount = allWords.length;
+    let learntWords = 0;
+    let wordsToReview = 0;
+    for (word of allWords) {
+      if (await DoesWordNeedReview(word)) {
+        wordsToReview += 1;
+      }
+      if (await IsWordLearnt(word)) {
+        learntWords += 1;
+      }
+    }
+    returnArray.push(
+      CourseCard(navigation, section, learntWords, wordCount, wordsToReview)
+    );
+  }
+  return returnArray;
+}
+
+function CourseCard(
+  navigation,
+  courseName,
+  amountLearnt,
+  amountToLearn,
+  amountToReview
+) {
   return (
-    <View style={styles.cardContainer}>
+    <View style={styles.cardContainer} key={courseName}>
       <View style={styles.card}>
         <Text style={styles.cardText}>{courseName}</Text>
         <View style={{ marginTop: 20 }}></View>
@@ -23,18 +59,28 @@ function CourseCard(courseName, amountLearnt, amountToLearn, amountToReview) {
               {amountToReview}
               {'\n'}to review
             </Text>
-            <TouchableOpacity style={styles.cardButton}>
-              <Text style={styles.cardButtonText}>Review</Text>
-            </TouchableOpacity>
+            <CardButton
+              text="Review"
+              onPress={() => {
+                ChooseWordsToReview(courseName).then((words) => {
+                  navigation.navigate('flashCardHidden', [words, 0]);
+                });
+              }}
+            />
           </View>
           <View>
             <Text style={styles.cardSubText}>
               {amountLearnt}/{amountToLearn}
               {'\n'}learnt
             </Text>
-            <TouchableOpacity style={styles.cardButton}>
-              <Text style={styles.cardButtonText}>Learn</Text>
-            </TouchableOpacity>
+            <CardButton
+              text="Learn"
+              onPress={() => {
+                ChooseWordsToLearn(courseName).then((words) => {
+                  navigation.navigate('flashCardHidden', [words, 0]);
+                });
+              }}
+            />
           </View>
         </View>
       </View>
@@ -43,15 +89,20 @@ function CourseCard(courseName, amountLearnt, amountToLearn, amountToReview) {
 }
 
 function Courses() {
+  const [courseCards, setCourseCards] = useState([]);
+  const navigation = useNavigation();
+  useEffect(() => {
+    GetAllCourseCards(navigation).then((result) => {
+      setCourseCards(result);
+    });
+  }, []);
+
   return (
     <View style={styles.body}>
       <Header />
       <ScrollView style={styles.cardScroll}>
         <Text style={styles.titleText}>Course Segments</Text>
-        {CourseCard('Greetings', 4, 55, 55)}
-        {CourseCard('What are you doing?', 23, 43, 30)}
-        {CourseCard('Where is the...?', 0, 100, 0)}
-        {CourseCard('Why is sergio...?', 0, 100, 0)}
+        {courseCards}
         <View style={{ height: 30 }}></View>
       </ScrollView>
       <Footer />
@@ -110,18 +161,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%'
-  },
-  cardButton: {
-    width: 136,
-    height: 53,
-    borderRadius: 12,
-    backgroundColor: '#A0D39C',
-    alignItems: 'center',
-    justifyContent: 'space-around'
-  },
-  cardButtonText: {
-    fontSize: 16,
-    fontFamily: 'Inter-Medium'
   }
 });
 
