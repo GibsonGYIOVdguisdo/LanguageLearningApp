@@ -1,9 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Pressable } from 'react-native';
+import { GetAllWords } from './CourseInteraction';
 
-// How often a decay is done in days
-const decayInterval = 2;
-
+// How often a decay is done in milliseconds
+let decayInterval = 1 * 24 * 60 * 60 * 1000;
 const learnAmount = {
   'terrible': 0,
   'bad': 1,
@@ -45,26 +44,51 @@ async function GetWordProgress(word) {
 async function GetDecayDate(word) {
   const storedVal = await AsyncStorage.getItem('words_german_decay_' + word);
   if (storedVal) {
-    return Date.parse(storedVal);
+    return parseInt(storedVal);
   }
-  return false;
+  return 0;
 }
 
 async function LearnWord(word, buttonPressed) {
   const progress = await GetWordProgress(word);
   const progressIncrement = learnAmount[buttonPressed];
   const newProgress = progress + progressIncrement;
-  let decayDate = new Date();
-  decayDate.setDate(decayDate.getDate() + decayInterval);
+  let decayDate = new Date().getTime();
+  decayDate = decayDate + decayInterval;
   AsyncStorage.setItem('words_german_progress_' + word, newProgress.toString());
-  AsyncStorage.setItem('words_german_decay_' + word, Date.toString(decayDate));
+  AsyncStorage.setItem('words_german_decay_' + word, decayDate.toString());
 }
 
+async function ShouldWordDecay(word) {
+  const currentDate = new Date().getTime();
+  const decayDate = await GetDecayDate(word);
+  return currentDate > decayDate && (await GetWordProgress(word)) > -1;
+}
+
+async function DoWordDelay(word) {
+  const currentDate = new Date().getTime();
+  const decayDate = currentDate + decayInterval;
+  const progress = await GetWordProgress(word);
+  const decayAmount = 1 * Math.floor((currentDate - decayDate) / decayInterval);
+  const newProgress = Math.max(progress - decayAmount, -1);
+  AsyncStorage.setItem('words_german_progress_' + word, newProgress.toString());
+  AsyncStorage.setItem('words_german_decay_' + word, decayDate.toString());
+}
+
+async function DoAllWordDecays(courseName) {
+  const words = GetAllWords(courseName);
+  for (let word of words) {
+    if (await ShouldWordDecay(word)) {
+      DoWordDelay(word);
+    }
+  }
+}
 export {
   IsWordLearnt,
   LearnWord,
   GetWordProgress,
   IsWordPerfected,
   GetDecayDate,
-  DoesWordNeedReview
+  DoesWordNeedReview,
+  DoAllWordDecays
 };
