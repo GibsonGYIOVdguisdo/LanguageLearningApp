@@ -1,6 +1,6 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import CardButton from '../components/CardButton';
 import {
   ChooseWordsToLearn,
@@ -14,10 +14,9 @@ import {
   Text,
   ScrollView
 } from 'react-native';
-import { useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { GetAllWords } from '../utils/CourseInteraction';
 import { DoesWordNeedReview, IsWordLearnt } from '../utils/WordLearning';
-
 function HopBackInCard(amountToReview, amountToLearn, amountLearnt) {
   const navigation = useNavigation();
   return (
@@ -162,8 +161,9 @@ function HomeScreen() {
   const [todaysWordCount, SetTodaysWordCount] = useState(0);
   const [allTimeMinutes, SetAllTimeMinutes] = useState(0);
   const [todaysMinutes, SetTodaysMinutes] = useState(0);
-  useEffect(() => {
-    GetAmountToReview = async () => {
+
+  useFocusEffect(() => {
+    const GetAmountToReview = async () => {
       const words = GetAllWords('German');
       let amountToReview = 0;
       for (let word of words) {
@@ -173,11 +173,11 @@ function HomeScreen() {
       }
       return amountToReview;
     };
-    GetAmountToLearn = async () => {
+    const GetAmountToLearn = async () => {
       const words = GetAllWords('German');
       return words.length;
     };
-    GetAmountLearnt = async () => {
+    const GetAmountLearnt = async () => {
       const words = GetAllWords('German');
       let amountLearnt = 0;
       for (let word of words) {
@@ -187,7 +187,6 @@ function HomeScreen() {
       }
       return amountLearnt;
     };
-
     GetAmountToReview().then((amount) => {
       SetAmountToReview(amount);
       SetAmountToReview(amount);
@@ -199,7 +198,7 @@ function HomeScreen() {
       SetAmountLearnt(amount);
       SetAllTimeWordCount(amount);
     });
-  }, []);
+  });
 
   return Home({
     amountToReview,
