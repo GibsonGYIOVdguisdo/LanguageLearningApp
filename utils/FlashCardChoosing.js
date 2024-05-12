@@ -68,13 +68,13 @@ async function ShuffleWords(words) {
   return newWords;
 }
 
-async function getWordsToLearnFromSection(section) {
+async function getWordsToLearnFromSection(section, fill = true) {
   words = [];
   words = words.concat(await GetNextWordsToLearn(section));
-  if (words.length === 0) {
+  if (words.length === 0 && fill) {
     words = words.concat(await GetNextWordsToReview(section));
   }
-  if (words.length === 0) {
+  if (words.length === 0 && fill) {
     words = words.concat(await GetRandomWords(section));
   }
   return words;
@@ -86,20 +86,22 @@ async function ChooseWordsToLearn(section) {
     words = words.concat(await getWordsToLearnFromSection(section));
   } else {
     for (let section of GetAllSections('German')) {
-      words = words.concat(await getWordsToLearnFromSection(section));
+      words = words.concat(await getWordsToLearnFromSection(section, false));
       if (words.length >= 10) {
         words = words.slice(0, 10);
         break;
       }
     }
+    if (words.length === 0) {
+      words = await GetRandomWords();
+    }
   }
-  words = await ShuffleWords(words);
   return words;
 }
-async function getWordsToReviewFromSection(section) {
+async function getWordsToReviewFromSection(section, fill = true) {
   words = [];
   words = words.concat(await GetNextWordsToReview(section));
-  if (words.length === 0) {
+  if (words.length === 0 && fill) {
     words = words.concat(await GetRandomWords(section));
   }
   return words;
@@ -111,11 +113,14 @@ async function ChooseWordsToReview(section) {
     words = words.concat(await getWordsToReviewFromSection(section));
   } else {
     for (let section of GetAllSections('German')) {
-      words = words.concat(await getWordsToReviewFromSection(section));
+      words = words.concat(await getWordsToReviewFromSection(section, false));
       if (words.length >= 10) {
         words = words.slice(0, 10);
         break;
       }
+    }
+    if (words.length === 0) {
+      words = await GetRandomWords();
     }
   }
   words = await ShuffleWords(words);
