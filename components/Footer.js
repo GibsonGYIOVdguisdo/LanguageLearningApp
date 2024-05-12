@@ -41,17 +41,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   footerCategoryContainer: {
-    alignItems: 'center'
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'space-between'
   },
   footerCategoryText: {
     fontSize: 12,
     fontWeight: '600',
-    marginTop: 4,
+    marginTop: 2,
     color: 'white',
     fontFamily: 'Inter-Medium'
   },
   footerIcon: {
-    height: 27,
+    height: 25,
     width: 30,
     overflow: 'visible',
     resizeMode: 'contain'
