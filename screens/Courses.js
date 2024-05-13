@@ -15,7 +15,8 @@ import {
   Platform,
   StatusBar,
   Text,
-  ScrollView
+  ScrollView,
+  ActivityIndicator
 } from 'react-native';
 
 async function GetAllCourseCards(navigation) {
@@ -90,10 +91,12 @@ function CourseCard(
 
 function Courses() {
   const [courseCards, setCourseCards] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
   useEffect(() => {
     GetAllCourseCards(navigation).then((result) => {
       setCourseCards(result);
+      setLoading(false);
     });
   }, []);
 
@@ -102,7 +105,15 @@ function Courses() {
       <Header />
       <ScrollView style={styles.cardScroll}>
         <Text style={styles.titleText}>Course Segments</Text>
-        {courseCards}
+        {loading ? (
+          <ActivityIndicator
+            style={{ marginTop: 20 }}
+            size="large"
+            color="#A0D39C"
+          />
+        ) : (
+          courseCards
+        )}
         <View style={{ height: 30 }}></View>
       </ScrollView>
       <Footer />
