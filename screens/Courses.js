@@ -16,7 +16,8 @@ import {
   StatusBar,
   Text,
   ScrollView,
-  ActivityIndicator
+  ActivityIndicator,
+  FlatList
 } from 'react-native';
 async function GetAllCourseCards(navigation) {
   let returnArray = [];
@@ -89,7 +90,7 @@ function CourseCard(
 }
 let lastCourseCards;
 function Courses() {
-  const [courseCards, setCourseCards] = useState(lastCourseCards);
+  const [courseCards, setCourseCards] = useState();
   const [loading, setLoading] = useState(true && lastCourseCards == undefined);
   const navigation = useNavigation();
   useEffect(() => {
@@ -98,7 +99,7 @@ function Courses() {
       setLoading(false);
       lastCourseCards = courseCards;
     });
-  }, []);
+  }, [courseCards]);
 
   return (
     <View style={styles.body}>
