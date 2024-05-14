@@ -18,7 +18,6 @@ import {
   ScrollView,
   ActivityIndicator
 } from 'react-native';
-
 async function GetAllCourseCards(navigation) {
   let returnArray = [];
   const sections = GetAllSections('German');
@@ -88,15 +87,16 @@ function CourseCard(
     </View>
   );
 }
-
+let lastCourseCards;
 function Courses() {
-  const [courseCards, setCourseCards] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [courseCards, setCourseCards] = useState(lastCourseCards);
+  const [loading, setLoading] = useState(true && lastCourseCards == undefined);
   const navigation = useNavigation();
   useEffect(() => {
     GetAllCourseCards(navigation).then((result) => {
       setCourseCards(result);
       setLoading(false);
+      lastCourseCards = courseCards;
     });
   }, []);
 
