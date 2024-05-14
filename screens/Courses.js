@@ -89,19 +89,16 @@ function CourseCard(
     </View>
   );
 }
-let lastCourseCards;
 function Courses() {
-  const [courseCards, setCourseCards] = useState(lastCourseCards);
-  const [loading, setLoading] = useState(true && lastCourseCards == undefined);
+  const [courseCards, setCourseCards] = useState();
+  const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
   useEffect(() => {
     GetAllCourseCards(navigation).then((result) => {
       setCourseCards(result);
       setLoading(false);
-      lastCourseCards = courseCards;
     });
-  }, [courseCards]);
-
+  }, []);
   return (
     <SafeAreaView style={styles.body}>
       <Header />
