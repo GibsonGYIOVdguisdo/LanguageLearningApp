@@ -9,6 +9,7 @@ import {
   StatusBar,
   TouchableOpacity
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 function FlashCardHidden(
   cardText,
@@ -19,7 +20,7 @@ function FlashCardHidden(
 ) {
   const navigation = useNavigation();
   return (
-    <View style={styles.body}>
+    <SafeAreaView style={styles.body}>
       <FlashcardHeader />
       <Text style={styles.flashcardProgressText}>
         {cardsCompleted}/{cardsToComplete}
@@ -33,7 +34,7 @@ function FlashCardHidden(
       >
         <Text style={styles.buttonText}>Show translation</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -52,7 +53,6 @@ function FlashCardHiddenScreen(navigation) {
 
 const styles = StyleSheet.create({
   body: {
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     flex: 1,
     backgroundColor: '#121212'
   },

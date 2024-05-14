@@ -1,3 +1,4 @@
+import { SafeAreaView } from 'react-native-safe-area-context';
 import FlashcardHeader from '../components/FlashcardHeader';
 import { IsWordPerfected, LearnWord } from '../utils/WordLearning';
 import { useNavigation } from '@react-navigation/native';
@@ -78,7 +79,7 @@ function FlashCardShown(
   currentIndex
 ) {
   return (
-    <View style={styles.body}>
+    <SafeAreaView style={styles.body}>
       <FlashcardHeader />
       <Text style={styles.flashcardProgressText}>
         {cardsCompleted}/{cardsToComplete}
@@ -88,7 +89,7 @@ function FlashCardShown(
       <View style={styles.horizontalLine}></View>
       <Text style={styles.flashcardText}>{cardTranslation}</Text>
       {FlashCardFooter(words, currentIndex)}
-    </View>
+    </SafeAreaView>
   );
 }
 function FlashCardShownScreen(navigation) {
@@ -110,7 +111,6 @@ function FlashCardShownScreen(navigation) {
 
 const styles = StyleSheet.create({
   body: {
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     flex: 1,
     backgroundColor: '#121212'
   },

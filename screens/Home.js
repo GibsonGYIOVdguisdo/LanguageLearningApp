@@ -17,6 +17,7 @@ import {
 import { useCallback, useState } from 'react';
 import { GetAllWords } from '../utils/CourseInteraction';
 import { DoesWordNeedReview, IsWordLearnt } from '../utils/WordLearning';
+import { SafeAreaView } from 'react-native-safe-area-context';
 function HopBackInCard(amountToReview, amountToLearn, amountLearnt) {
   const navigation = useNavigation();
   return (
@@ -134,7 +135,7 @@ function Home({
   todaysMinutes
 }) {
   return (
-    <View style={styles.body}>
+    <SafeAreaView style={styles.body}>
       <Header />
       <ScrollView style={styles.cardScroll}>
         {HopBackInCard(amountToReview, amountToLearn, amountLearnt)}
@@ -147,7 +148,7 @@ function Home({
         )}
       </ScrollView>
       <Footer />
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -215,7 +216,6 @@ function HomeScreen() {
 
 const styles = StyleSheet.create({
   body: {
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     flex: 1,
     backgroundColor: '#121212'
   },

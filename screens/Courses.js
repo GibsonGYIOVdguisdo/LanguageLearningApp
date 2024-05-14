@@ -19,6 +19,7 @@ import {
   ActivityIndicator,
   FlatList
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 async function GetAllCourseCards(navigation) {
   let returnArray = [];
   const sections = GetAllSections('German');
@@ -102,7 +103,7 @@ function Courses() {
   }, [courseCards]);
 
   return (
-    <View style={styles.body}>
+    <SafeAreaView style={styles.body}>
       <Header />
       <ScrollView style={styles.cardScroll}>
         <Text style={styles.titleText}>Course Segments</Text>
@@ -118,13 +119,12 @@ function Courses() {
         <View style={{ height: 30 }}></View>
       </ScrollView>
       <Footer />
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   body: {
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     flex: 1,
     backgroundColor: '#121212'
   },
