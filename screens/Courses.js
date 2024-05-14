@@ -90,7 +90,7 @@ function CourseCard(
 }
 let lastCourseCards;
 function Courses() {
-  const [courseCards, setCourseCards] = useState();
+  const [courseCards, setCourseCards] = useState(lastCourseCards);
   const [loading, setLoading] = useState(true && lastCourseCards == undefined);
   const navigation = useNavigation();
   useEffect(() => {
