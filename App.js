@@ -6,6 +6,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
 import { DoAllWordDecays } from './utils/WordLearning';
+import Footer from './components/Footer';
+import Header from './components/Header';
+import { SafeAreaView } from 'react-native-safe-area-context';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -27,6 +30,8 @@ export default function App() {
   }
   return (
     <NavigationContainer>
+      <SafeAreaView />
+      <Header />
       <Stack.Navigator
         screenOptions={{
           headerShown: false
@@ -48,6 +53,8 @@ export default function App() {
           options={{ animation: 'slide_from_right' }}
         />
       </Stack.Navigator>
+      <Footer />
+      <SafeAreaView />
     </NavigationContainer>
   );
 }

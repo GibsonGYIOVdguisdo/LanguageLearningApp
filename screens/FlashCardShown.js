@@ -79,7 +79,7 @@ function FlashCardShown(
   currentIndex
 ) {
   return (
-    <SafeAreaView style={styles.body}>
+    <View style={styles.body}>
       <FlashcardHeader />
       <Text style={styles.flashcardProgressText}>
         {cardsCompleted}/{cardsToComplete}
@@ -89,7 +89,7 @@ function FlashCardShown(
       <View style={styles.horizontalLine}></View>
       <Text style={styles.flashcardText}>{cardTranslation}</Text>
       {FlashCardFooter(words, currentIndex)}
-    </SafeAreaView>
+    </View>
   );
 }
 function FlashCardShownScreen(navigation) {
