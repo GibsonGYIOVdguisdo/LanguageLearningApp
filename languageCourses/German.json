@@ -26,7 +26,6 @@
       "Alles klar?": "Everything okay?"
     },
     "Introductions 1": {
-      "Wie heißt du?": "What's your name?",
       "Ich heiße...": "My name is...",
       "Wie alt bist du?": "How old are you?",
       "Ich bin ... Jahre alt.": "I am ... years old.",
@@ -48,11 +47,7 @@
       "Ja": "Yes",
       "Nein": "No",
       "Vielleicht": "Maybe",
-      "Entschuldigung": "Excuse me",
-      "Bitte": "Please",
-      "Danke": "Thank you",
       "Gern geschehen": "You're welcome",
-      "Es tut mir leid": "I'm sorry",
       "Kein Problem": "No problem",
       "Auf keinen Fall": "No way",
       "Alles klar?": "Everything alright?",
@@ -242,21 +237,18 @@
       "Zwanzig": "Twenty"
     },
     "Numbers 20+": {
-      "Einundzwanzig": "Twenty-one",
-      "Zweiundzwanzig": "Twenty-two",
-      "Dreiundzwanzig": "Twenty-three",
-      "Vierundzwanzig": "Twenty-four",
-      "Fünfundzwanzig": "Twenty-five",
-      "Sechsundzwanzig": "Twenty-six",
-      "Siebenundzwanzig": "Twenty-seven",
-      "Achtundzwanzig": "Twenty-eight",
-      "Neunundzwanzig": "Twenty-nine",
-      "Dreißig": "Thirty"
+      "Dreißig": "Thirty",
+      "Vierzig": "Fourty",
+      "Fünfzig": "Fifty",
+      "Sechzig": "Sixty",
+      "Siebzig": "Seventy",
+      "Achtzig": "Eighty",
+      "Neunzig": "Ninety",
+      "Einhundert": "One hundred"
     },
     "Introductions 2": {
       "Hallo zusammen!": "Hello everyone!",
       "Ich freue mich, dich kennenzulernen.": "Nice to meet you.",
-      "Wie war dein Tag?": "How was your day?",
       "Schön, dich zu sehen.": "Nice to see you.",
       "Wie ist dein Name?": "What's your name?",
       "Mein Name ist ...": "My name is ...",
@@ -273,7 +265,6 @@
       "Es ist gut, dich zu sehen.": "It's good to see you.",
       "Wie war deine Reise?": "How was your trip?",
       "Schön, dass du hier bist.": "Nice that you're here.",
-      "Was machst du beruflich?": "What do you do for a living?",
       "Es ist schön, wieder mit dir zu sprechen.": "It's nice to talk to you again.",
       "Es ist schön, dich kennenzulernen.": "It's nice to meet you.",
       "Wie war dein Wochenende?": "How was your weekend?"
