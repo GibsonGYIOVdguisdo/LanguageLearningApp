@@ -135,7 +135,8 @@ function Home({
   todaysMinutes
 }) {
   return (
-    <View style={styles.body}>
+    <SafeAreaView style={styles.body}>
+      <Header />
       <ScrollView style={styles.cardScroll}>
         {HopBackInCard(amountToReview, amountToLearn, amountLearnt)}
         {LearningStreakCard(currentLearningStreak, bestLearningStreak)}
@@ -146,7 +147,8 @@ function Home({
           todaysMinutes
         )}
       </ScrollView>
-    </View>
+      <Footer />
+    </SafeAreaView>
   );
 }
 

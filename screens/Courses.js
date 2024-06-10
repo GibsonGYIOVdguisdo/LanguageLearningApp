@@ -100,7 +100,8 @@ function Courses() {
     });
   }, []);
   return (
-    <View style={styles.body}>
+    <SafeAreaView style={styles.body}>
+      <Header />
       <ScrollView style={styles.cardScroll}>
         <Text style={styles.titleText}>Course Segments</Text>
         {loading ? (
@@ -114,7 +115,8 @@ function Courses() {
         )}
         <View style={{ height: 30 }}></View>
       </ScrollView>
-    </View>
+      <Footer />
+    </SafeAreaView>
   );
 }
 
