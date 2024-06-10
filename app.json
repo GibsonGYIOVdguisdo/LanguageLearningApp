@@ -1,12 +1,13 @@
 {
   "expo": {
+    "name": "languagelearningapp",
     "extra": {
       "eas": {
-        "projectId": "688092f1-999e-45f7-98c9-dde24cff4a7f"
+        "projectId": "f5cd8207-95a5-419c-8cb1-fd2af0e2af9e"
       }
     },
     "android": {
-      "package": "com.gibdbwea.reactnativeexampleproject"
+      "package": "com.gibdbwea.languagelearningapp"
     }
   }
 }
