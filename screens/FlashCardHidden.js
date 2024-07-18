@@ -20,7 +20,7 @@ function FlashCardHidden(
 ) {
   const navigation = useNavigation();
   return (
-    <View style={styles.body}>
+    <SafeAreaView style={styles.body}>
       <FlashcardHeader />
       <Text style={styles.flashcardProgressText}>
         {cardsCompleted}/{cardsToComplete}
@@ -34,7 +34,7 @@ function FlashCardHidden(
       >
         <Text style={styles.buttonText}>Show translation</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }
 
